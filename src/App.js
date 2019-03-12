@@ -5,7 +5,8 @@ import Login from './components/Login'
 import Register from './components/Register'
 import Product from './components/productList'
 import ManageProduct from './components/admin/manageProduct'
-import { Route ,withRouter } from 'react-router-dom' 
+import PageNotFound from './components/pageNotFound'
+import { Route ,withRouter, Switch } from 'react-router-dom' 
 import {connect} from 'react-redux'
 import cookie from 'universal-cookie'
 import { keepLogin } from './1.actions'
@@ -26,11 +27,14 @@ class App extends Component {
     return (
       <div>
           <Navbar/>
-          <Route path='/' component={Home} exact/>
-          <Route path='/login' component={Login} exact/>
-          <Route path='/register' component={Register} exact/>
-          <Route path='/product' component={Product} exact/>
-          <Route path='/manage' component={ManageProduct} exact/>
+          <Switch>
+            <Route path='/' component={Home} exact/>
+            <Route path='/login' component={Login} exact/>
+            <Route path='/register' component={Register} exact/>
+            <Route path='/product' component={Product} exact/>
+            <Route path='/manage' component={ManageProduct} exact/>
+            <Route path='*' component={PageNotFound} exact/>
+          </Switch>
       </div>
     );
   }

@@ -24,7 +24,11 @@ export const onLogin = (paramUsername,password) => {
                 dispatch(
                     {
                         type : 'LOGIN_SUCCESS',
-                        payload : res.data[0].username
+                        payload : 
+                        {
+                             username : res.data[0].username,
+                             role : res.data[0].role
+                        }
                     }
                 )
             }else{
@@ -51,7 +55,11 @@ export const keepLogin = (cookie) => {
             if(res.data.length > 0){
                 dispatch({
                     type : 'LOGIN_SUCCESS',
-                    payload : res.data[0].username
+                    payload : 
+                        {
+                             username : res.data[0].username,
+                             role : res.data[0].role
+                        }
                 })
             }
         })
