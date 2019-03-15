@@ -13,7 +13,7 @@ import {connect} from 'react-redux'
 import cookie from 'universal-cookie'
 import { keepLogin } from './1.actions'
 import './App.css';
-import scrollToTop from './components/scrollToTop';
+
 
 // withRouter => Untuk tersambung ke Reducer dengan connect, 
 // tapi di dalam komponen ada routing
@@ -31,7 +31,7 @@ class App extends Component {
     return (
       <div>
           <Navbar/>
-          <scrollToTop>
+          <ScrollToTop>
             <Switch>            
                 <Route path='/' component={Home} exact/>
                 <Route path='/login' component={Login} exact/>
@@ -41,7 +41,7 @@ class App extends Component {
                 <Route path='/productDetail/:id' component={ProductDetail} exact/>
                 <Route path='*' component={PageNotFound} exact/>              
             </Switch>
-          </scrollToTop>
+          </ScrollToTop>
       </div>
     );
   }
