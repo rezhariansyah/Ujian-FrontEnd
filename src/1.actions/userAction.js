@@ -3,7 +3,7 @@ import {urlApi} from './../support/urlApi'
 import cookie from 'universal-cookie'
 
 const objCookie = new cookie()
-export const onLogin = (paramUsername,password) => { 
+export const onLogin = (paramUsername,password) => { //diambil dari Login.js
     return(dispatch)=>{
         // INI UNTUK MENGUBAH LOADING MENJADI TRUE
         dispatch({
@@ -13,7 +13,7 @@ export const onLogin = (paramUsername,password) => {
         // GET DATA DARI FAKE API JSON SERVER
         axios.get(urlApi + '/users',{
             params:{username :paramUsername,
-                    password}})
+                    password}}) //localhost/users?username=rezha&password=rahasia123
         
         // KALO BERHASIL NGE GET, DIA MASUK THEN
         .then((res) => {
@@ -27,7 +27,8 @@ export const onLogin = (paramUsername,password) => {
                         payload : 
                         {
                              username : res.data[0].username,
-                             role : res.data[0].role
+                             role : res.data[0].role,
+                             id : res.data[0].id
                         }
                     }
                 )
@@ -38,6 +39,7 @@ export const onLogin = (paramUsername,password) => {
             }
             
         })
+        // kalo gagal dia masuk ke catch
         .catch((err) => {
             dispatch({
                 type : 'SYSTEM_ERROR'
@@ -110,7 +112,38 @@ export const userRegister = (a,b,c,d) => { // userRegister('fikri')
         })
     }
 }
-userRegister('Fikri','123','fikri@gmail.com','0812381234')
+
+export const loginWithGoogle = (email) => {
+    return(dispatch) => {
+        axios.get(urlApi + '/users?username=' + email)
+        .then((res) => {
+            if(res.data.length > 0) {
+                dispatch ({
+                    type : 'LOGIN_SUCCESS',
+                    payload : res.data[0]
+                },
+                    objCookie.set('userData',email,{path : '/'})
+                )
+            } else {
+                axios.post(urlApi + '/users', {username : email, role : 'user'})
+                .then((res) => {
+                    dispatch ({
+                        type : 'LOGIN_SUCCESS',
+                        payload : res.data
+                    },
+                        objCookie.set('userData',email,{path : '/'})
+                    )
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+}
 
 
 

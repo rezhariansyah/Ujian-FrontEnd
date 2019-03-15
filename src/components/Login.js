@@ -14,10 +14,11 @@ class Login extends React.Component{
         console.log(newProps)
         Cookie.set('userData',newProps.username,{path :'/'})
     }
+    
     onBtnLoginClick = () => {
-        var username = this.refs.username.value // fikri
+        var username = this.refs.username.value // rezha
         var password = this.refs.password.value // rahasia123
-        this.props.onLogin(username,password)
+        this.props.onLogin(username,password) // di kirim ke action creater
     }
 
     renderBtnOrLoading = () => {
@@ -43,7 +44,7 @@ class Login extends React.Component{
 
     render(){
         if(this.props.username !== ""){
-            return <Redirect to='/'/>
+            return <Redirect to='/'/> //ke homepage
         }
         return(
             <div className="container myBody" style={{minHeight:"600px"}}>
